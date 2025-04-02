@@ -6,7 +6,8 @@ import SectionTitle from "../global/SectionTitle";
 import ProductsGrid from "../products/ProductsGrid";
 import { fetchFeaturedProduct } from "@/utils/action";
 import EmptyList from "../global/EmptyList";
-import FavouriteToggleButton from "../products/FavouriteToggleButton";
+
+import LoadingContainer from "../global/LoadingContainer";
 
 export default function FeaturedProduct() {
   const [products, setProducts] = useState([]);
@@ -16,18 +17,20 @@ export default function FeaturedProduct() {
     const loadProducts = async () => {
       const data = await fetchFeaturedProduct();
       setProducts(data as any);
+      console.log("product is", products);
       setLoading(false);
     };
     loadProducts();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingContainer />;
+
   if (products.length === 0) return <EmptyList />;
 
   return (
     <section className="pt-24">
       <SectionTitle text="Featured Product" />
-      <FavouriteToggleButton productId="12" />
+
       <ProductsGrid products={products} />
     </section>
   );
