@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -11,8 +11,9 @@ import Link from "next/link";
 import { navLinks } from "@/utils/links";
 
 const LinksDropDown = () => {
+  const [open, setOpen] = useState(false);
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
@@ -23,12 +24,12 @@ const LinksDropDown = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-48 dark:bg-white dark:text-black"
+        className="w-48 dark:bg-primary text-background z-20 "
         align="start"
         sideOffset={10}
       >
         {navLinks.map((link) => (
-          <DropdownMenuItem key={link.href}>
+          <DropdownMenuItem key={link.href} onClick={() => setOpen(false)}>
             <Link href={link.href} className="capitalize ">
               {link.label}
             </Link>

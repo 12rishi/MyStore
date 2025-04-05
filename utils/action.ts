@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import db from "./db";
 
 // Fetching data with Prisma (inside API route or server-side function)
@@ -26,16 +27,42 @@ export const fetchFeaturedProduct = async () => {
   }
 };
 
-export const fetchAllProducts = async () => {
+export const fetchAllProducts = async ({
+  searchParams = "",
+}: {
+  searchParams: string;
+}) => {
   try {
     const allProducts = await db.product.findMany({
       orderBy: {
         createdAt: "desc",
+      },
+      where: {
+        OR: [
+          { name: { contains: searchParams, mode: "insensitive" } },
+          { company: { contains: searchParams, mode: "insensitive" } },
+        ],
       },
     });
     return allProducts;
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch all products");
+  }
+};
+export const fetchSingleProduct = async (id: string) => {
+  try {
+    const singleProduct = await db.product.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!singleProduct) {
+      redirect("/products");
+    }
+    return singleProduct;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to fetch single product");
   }
 };
