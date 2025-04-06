@@ -4,7 +4,7 @@ import "./globals.css";
 import Container from "@/components/global/container";
 import Navbar from "@/components/navbar/Navbar";
 import Provider from "./Provider";
-
+import { ClerkProvider } from "@clerk/nextjs";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,10 +31,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <Provider>
-          <Navbar />
-          <Container className="py-20">{children}</Container>
-        </Provider>
+        <ClerkProvider>
+          <Provider>
+            <Navbar />
+            <Container className="py-20">{children}</Container>
+          </Provider>
+        </ClerkProvider>
       </body>
     </html>
   );
