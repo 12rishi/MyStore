@@ -2,6 +2,7 @@ type NavLink = {
   href: string;
   label: string;
 };
+
 export const navLinks: NavLink[] = [
   {
     href: "/",
@@ -27,4 +28,11 @@ export const navLinks: NavLink[] = [
     href: "/orders",
     label: "orders",
   },
+  { href: "/admin/sales", label: "dashboard" },
+];
+export const adminSideBarLink = [
+  { href: "/admin/sales", label: "sales" },
+
+  { href: "/admin/products", label: "my products" },
+  { href: "/admin/products/create", label: "create products" },
 ];

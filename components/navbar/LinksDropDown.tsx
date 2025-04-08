@@ -18,10 +18,18 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import SignOut from "./SignOut";
-
+import { useAuth } from "@clerk/nextjs";
 // Client component for dropdown menu
 const LinksDropDown = () => {
   const [open, setOpen] = useState(false);
+  const { userId } = useAuth();
+  console.log("userId", userId);
+  const isAdmin = userId === process.env.NEXT_PUBLIC_ADMIN_ID;
+
+  console.log("isAdmin", isAdmin);
+
+  // const { userId } = await auth();
+  // const isAdmin = userId === process.env.ADMIN_ID;
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -64,16 +72,21 @@ const LinksDropDown = () => {
           </DropdownMenuItem>
         </SignedOut>
         <SignedIn>
-          {navLinks.map((link) => (
-            <DropdownMenuItem key={link.href} onClick={() => setOpen(false)}>
-              <Link
-                href={link.href}
-                className="capitalize text-primary dark:text-background"
-              >
-                {link.label}
-              </Link>
-            </DropdownMenuItem>
-          ))}
+          {navLinks.map((link) => {
+            if (!isAdmin && link.label === "dashboard") {
+              return null;
+            }
+            return (
+              <DropdownMenuItem key={link.href} onClick={() => setOpen(false)}>
+                <Link
+                  href={link.href}
+                  className="capitalize text-primary dark:text-background"
+                >
+                  {link.label}
+                </Link>
+              </DropdownMenuItem>
+            );
+          })}
           <Separator />
           <DropdownMenuItem>
             <SignOut />
