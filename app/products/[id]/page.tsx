@@ -15,16 +15,16 @@ const SingleProductPage = async ({ params }: { params: { id: string } }) => {
   return (
     <section className="container w-full h-[calc(100vh-100px)] shadow-md shadow-primary/40 rounded-lg p-4 overflow-hidden">
       <BreadCrumb name={name} />
-      <div className="flex   gap-8 mt-4 h-full">
-        <div className="w-1/2 h-auto relative rounded-lg">
+      <div className="flex w-full   gap-8 mt-4 h-full">
+        <div className="w-1/2 h-full relative rounded-lg">
           <Image
             src={image}
             alt={name}
             fill
-            className="object-cover absolute rounded-lg"
+            className="object-cover absolute  rounded-lg"
           />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-1/2 overflow-auto">
           <div className="flex gap-4">
             <h1 className="text-2xl font-bold">{name}</h1>
             <div>

@@ -12,7 +12,7 @@ const CheckBoxInput = ({
   defaultChecked = false,
 }: CheckBoxInputProps) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 mt-2">
       <Checkbox id={name} name={name} defaultChecked={defaultChecked} />
       <Label
         htmlFor={name}
