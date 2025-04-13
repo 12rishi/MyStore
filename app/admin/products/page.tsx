@@ -1,3 +1,5 @@
+import { IconButton } from "@/components/form/Buttons";
+import FormContainer from "@/components/form/FormContainer";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -9,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchAdminProducts } from "@/utils/action";
+import { deleteProduct, fetchAdminProducts } from "@/utils/action";
 import { formatCurrency } from "@/utils/format";
 import Link from "next/link";
 import React from "react";
@@ -36,8 +38,10 @@ const ProductsPage = async () => {
             <TableCell>{formatCurrency(Number(product.price))}</TableCell>
 
             <TableCell className="flex gap-4">
-              <Button>Edit</Button>
-              <Button>Delete</Button>
+              <Link href={`/admin/edit/${product.id}`}>
+                <IconButton actionType="edit" />
+              </Link>
+              <DeletProduct productId={product.id} />
             </TableCell>
           </TableRow>
         ))}
@@ -57,3 +61,14 @@ const ProductsPage = async () => {
 };
 
 export default ProductsPage;
+
+const DeletProduct = async ({ productId }: { productId: string }) => {
+  const deleteProductId = deleteProduct.bind(null, { productId });
+  return (
+    <div>
+      <FormContainer action={deleteProductId}>
+        <IconButton actionType="delete" />
+      </FormContainer>
+    </div>
+  );
+};

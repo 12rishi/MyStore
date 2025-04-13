@@ -20,3 +20,13 @@ export const uploadImage = async (file: File) => {
   console.log("error", error);
   return supabase.storage.from(bucketName).getPublicUrl(newName).data.publicUrl;
 };
+export const deleteProductImage = async (path: string) => {
+  const imageName = path.split("/").pop();
+  const { data, error } = await supabase.storage
+    .from(process.env.SUPABASE_BUCKET_NAME as string)
+    .remove([imageName as string]);
+  if (error) {
+    throw new Error(error?.message);
+  }
+  return;
+};

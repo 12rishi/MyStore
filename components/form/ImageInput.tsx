@@ -5,8 +5,8 @@ import { Input } from "../ui/input";
 const ImageInput = () => {
   const name = "image";
   return (
-    <div className="mb-4">
-      <Label htmlFor={name} className="capitalize mb-2">
+    <div className="mt-4 z-10">
+      <Label htmlFor={name} className="capitalize mb-4">
         Image
       </Label>
       <Input id={name} type="file" name={name} accept="image/*" required />
